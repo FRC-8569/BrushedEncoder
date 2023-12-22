@@ -17,14 +17,13 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Robot extends TimedRobot {
   private Joystick m_stick;
-  private static final int deviceID = 1;
   private CANSparkMax m_motor;
   private RelativeEncoder m_encoder;
 
   @Override
   public void robotInit() {
     // initialize SPARK MAX
-    m_motor = new CANSparkMax(deviceID, MotorType.kBrushless);
+    m_motor = new CANSparkMax(4, MotorType.kBrushless);
 
     /**
      * The RestoreFactoryDefaults method can be used to reset the configuration parameters
@@ -45,8 +44,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     // set the motor output based on jostick position
-    m_motor.set(m_stick.getY());
+    m_motor.set(m_stick.getRawAxis(0));
 
+    SmartDashboard.putNumber("joy", m_stick.getRawAxis(0));
     /**
      * Encoder position is read from a RelativeEncoder object by calling the
      * GetPosition() method.
